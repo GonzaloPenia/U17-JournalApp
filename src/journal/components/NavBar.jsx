@@ -19,7 +19,7 @@ export const NavBar = ({ drawerWidth }) => {
             </IconButton>
 
             <Grid2 container direction='row' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }}>
-                <Typography variant='h6' noWrap component='div'>JournalApp</Typography>
+                <Typography variant='h7' noWrap component='div'>JournalApp</Typography>
 
                 <IconButton color='error' sx={{ ml: 'auto' }}>
                     <LogoutOutlined/>
