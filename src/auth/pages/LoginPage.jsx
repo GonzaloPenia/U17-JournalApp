@@ -1,20 +1,24 @@
-import { useDispatch } from "react-redux";
+import { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Typography, TextField, Grid, Button, Link } from "@mui/material";
 import { Google } from "@mui/icons-material";
 
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
-import { checkingAuthentication, startGoogleSingIn } from "../../store/auth"
+import { checkingAuthentication, startGoogleSignIn } from "../../store/auth"
 
 export const LoginPage = () => {
-  
-    const dispatch = useDispatch();
     
+    const { status } = useSelector( state => state.auth );
+
+    const dispatch = useDispatch();
     const {email, password, onInputChange} = useForm({
         email:'gonzalo.penia@google.com',
         password:'123456',
     });
+    
+    const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -25,7 +29,7 @@ export const LoginPage = () => {
     
     const onGoogleSingIn = () => { 
         console.log("On google singin");
-        dispatch( startGoogleSingIn() );
+        dispatch( startGoogleSignIn() );
     }
 
     return (
@@ -67,11 +71,18 @@ export const LoginPage = () => {
                         {/* Buttons */}
                         <Grid container spacing={2} sx={{ mt: 2 }}>
                             <Grid item xs={12} md={6}>
-                                <Button type="submit" variant="contained" fullWidth> Login </Button>
+                                <Button 
+                                disabled={isAuthenticating}  
+                                type="submit" 
+                                variant="contained" 
+                                fullWidth
+                                > 
+                                Login </Button>
                             </Grid>
 
                             <Grid item xs={12} md={6}>
-                                <Button 
+                                <Button
+                                    disabled={isAuthenticating} 
                                     variant="contained" 
                                     onClick={onGoogleSingIn} 
                                     fullWidth 
