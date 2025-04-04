@@ -34,9 +34,6 @@ export const registerUserWithEmailPassword  = async ({ email,password,displayNam
 
     try {
         
-        console.log({ email,password,displayName });
-        
-        
         const resp = await createUserWithEmailAndPassword(FirebaseAuth,email,password);
         const {uid,photoURL} = resp.user;
         
@@ -57,8 +54,9 @@ export const registerUserWithEmailPassword  = async ({ email,password,displayNam
 export const loginUserWithEmailPassword = async ({ email,password }) => { 
     
     try {
-        console.log(email,password);
+         
         const resp = await signInWithEmailAndPassword(FirebaseAuth,email,password);
+        
         const {uid,photoURL,displayName} = resp.user;
         
         return{
@@ -67,7 +65,6 @@ export const loginUserWithEmailPassword = async ({ email,password }) => {
         }
 
     } catch (error) {
-        //console.log(error);
         return {ok: false, errorMessage: error.message}
     }
 

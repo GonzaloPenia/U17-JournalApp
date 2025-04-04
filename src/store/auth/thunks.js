@@ -31,15 +31,12 @@ export const startGoogleSignIn = () => {
      }
  }
 
- export const startLoginWithEmailPassword = (email,password) => {
+ export const startLoginWithEmailPassword = ( {email,password} ) => {
     
     return async  (dispatch) => {
-        console.log(email,password);       
         dispatch (checkingCredentials);
-        console.log(email,password);
 
         const result = await loginUserWithEmailPassword( {email,password} );
-        console.log(result);
 
         if (!result.ok) return dispatch ( logout(  result ) );
         dispatch( login( result ) );
