@@ -35,7 +35,7 @@ export const LoginPage = () => {
     return (
         <AuthLayout title="Ingresa a tu cuenta.">
             <form onSubmit={onSubmit}>
-                <Box>
+                <Box className='animate__animated animate__fadeIn'>
                     <Box>
                         {/* TextField's */}
                         <Grid container spacing={2}>
