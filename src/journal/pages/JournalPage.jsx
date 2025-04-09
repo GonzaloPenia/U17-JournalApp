@@ -25,9 +25,6 @@ export const JournalPage = () => {
           
         }
 
-        {console.log(active)}
-        
-        
         <IconButton
           onClick={onClickNewNote}
           disabled={ isSaving }

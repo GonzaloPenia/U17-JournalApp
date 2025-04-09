@@ -10,9 +10,7 @@ export const journalSlice = createSlice({
     },
     reducers: {
         savingNewNote:(state) => {        
-            console.log(state.isSaving);
             state.isSaving = true;
-            console.log(state.isSaving);
         },
         addNewEmptyNote:(state,action) => {
             state.notes.push(action.payload);
@@ -26,11 +24,25 @@ export const journalSlice = createSlice({
             state.notes=action.payload;
         },
         setSaving: (state) => { 
-
+            state.isSaving = true;
+            state.messageSaved = '';
+            //TODO: Agregar un mensaje de error
         },
         updateNote: (state,action) => { 
+            state.isSaving = false;
+            state.notes = state.notes.map( note => {
+                if(note.id === action.payload.id){
+                    return action.payload;
+                }
 
+                return note;
+            });
+            //TODO: Mostrar mensaje de actualizacion
+
+            state.messageSaved = `La nota fue actualizada correctamente`;
         },
+
+
         deleteNoteById: (state,action) => { 
 
         }

@@ -1,18 +1,55 @@
+import React, { useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import { SaveOutlined } from '@mui/icons-material'
 import { Typography, Button, TextField } from '@mui/material'
 import Grid from '@mui/material/Grid';
-import React from 'react'
+
 import { ImageGallery } from '../components'
+import { useForm } from '../../hooks'
+import { setActiveNote, startSaveNote } from '../../store/journal';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 export const NoteView = () => {
-  return (
+    
+    const dispatch = useDispatch();
+    
+    const {active: note, messageSaved, isSaving} = useSelector(state => state.journal);
+    
+    const {body, title, date, onInputChange, formState} = useForm( note );
+    const dateString = useMemo(() => {
+        
+        const newDate = new Date( date );
+        
+        return newDate.toUTCString();
+    }, [date])
+
+    
+    useEffect(() => {
+        dispatch( setActiveNote(formState) );
+    }, [formState])
+    
+    useEffect(() => {
+      if(messageSaved.length>0){
+        Swal.fire('Nota actualizada', messageSaved, 'success');
+      }
+    }, [messageSaved])
+    
+
+    const onSaveNote = () => { 
+        
+        dispatch( startSaveNote() );
+    }
+
+    return (
     <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb:1 }}>
         <Grid>
-            <Typography fontSize={39} fontWeight='light' >23 de marzo, 2025</Typography>
+            <Typography fontSize={39} fontWeight='light' >{dateString}</Typography>
         </Grid>
         
         <Grid>
-            <Button color="primary" sx={{ padding:2 }}>
+            <Button disabled={isSaving} onClick={onSaveNote} color="primary" sx={{ padding:2 }}>
                 <SaveOutlined sx={{fontSize: 30, mr: 1 }} />
                 Guardar
             </Button>
@@ -20,6 +57,9 @@ export const NoteView = () => {
 
         <Grid container direction='row' alignItems='center' sx={{ mb:1 }}>
             <TextField
+                    name="title"
+                    value={title}
+                    onChange={onInputChange}
                     type="text"
                     variant="filled"
                     fullWidth
@@ -28,6 +68,9 @@ export const NoteView = () => {
                     sx={{border: 'none', mb:1}}
             />
             <TextField
+                    name="body"
+                    value={body}
+                    onChange={onInputChange}
                     type="text"
                     variant="filled"
                     fullWidth
