@@ -55,3 +55,11 @@ export const startNewNote = () => {
         dispatch ( updateNote(note) );
     }
    }
+
+   export const startUploadingFiles = (files=[]) => { 
+        return async (dispatch) => {
+            dispatch( setSaving() );
+            console.log(files);
+            //TODO: Terminar la carga de archivos
+        }
+    }
