@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore/lite";
 import { FirebaseDB } from "../firebase/config";
 
-export const loadNotes = async (uid='') => { 
+export const loadNotes = async ( uid='' ) => { 
     
     if (!uid) throw newError('Error, el UID no existe');
 
@@ -11,6 +11,10 @@ export const loadNotes = async (uid='') => {
     const notes = [];
     docs.forEach( doc => {
         notes.push({id: doc.id, ...doc.data() });
-    });    
+    });
+    
+    console.log(notes);
+    
+    
     return notes;
  }

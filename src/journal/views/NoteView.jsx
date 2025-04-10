@@ -21,7 +21,6 @@ export const NoteView = () => {
     const dateString = useMemo(() => {
         
         const newDate = new Date( date );
-        
         return newDate.toUTCString();
     }, [date])
 
@@ -100,9 +99,9 @@ export const NoteView = () => {
                     minRows={5}
             />
         </Grid>
-
-
-        <ImageGallery/>  
+        
+        <ImageGallery images={ note.imageUrls } />
+        
 
 
     </Grid>

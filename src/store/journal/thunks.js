@@ -1,7 +1,8 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../firebase/config";
-import { savingNewNote, addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote } from "./journalSlice";
+import { savingNewNote, addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote, setPhotosToActiveNote } from "./journalSlice";
 import { loadNotes } from "../../helpers/loadNotes";
+import { fileUpload } from "../../helpers";
 
 export const startNewNote = () => { 
     
@@ -17,11 +18,11 @@ export const startNewNote = () => {
             title: '',
             body: '',
             date: new Date().getTime(),
+            imageUrls: []
         }
 
         const newDoc = doc ( collection( FirebaseDB, `${uid}/journal/notes`) )
         await setDoc(newDoc,newNote)
-
         newNote.id = newDoc.id;
         dispatch( addNewEmptyNote( newNote ) );
         dispatch( setActiveNote(newNote) )
@@ -56,10 +57,17 @@ export const startNewNote = () => {
     }
    }
 
-   export const startUploadingFiles = (files=[]) => { 
+   export const startUploadingFiles = ( files=[] ) => { 
         return async (dispatch) => {
             dispatch( setSaving() );
-            console.log(files);
-            //TODO: Terminar la carga de archivos
+            
+            const fileUploadPromises = [];
+            for (const file of files) {
+                fileUploadPromises.push( fileUpload(file) );
+            }
+            const photoUrls = await Promise.all (fileUploadPromises);
+
+            dispatch( setPhotosToActiveNote( photoUrls ) );
+
         }
     }
