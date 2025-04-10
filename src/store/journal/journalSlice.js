@@ -47,7 +47,7 @@ export const journalSlice = createSlice({
             
             console.log(typeof(state.active.imageUrls));
             
-            state.active.imageUrls = [ ...(state.active.imageUrls || []), ...action.payload ];
+            state.active.imageUrls = [ ...state.active.imageUrls, ...action.payload ];
             
             console.log(typeof(state.active.imageUrls));
             
