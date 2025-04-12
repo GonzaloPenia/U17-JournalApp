@@ -37,24 +37,25 @@ export const journalSlice = createSlice({
 
                 return note;
             });
-            //TODO: Mostrar mensaje de actualizacion
 
             state.messageSaved = `La nota fue actualizada correctamente`;
         },
 
 
         setPhotosToActiveNote: (state,action) => { 
-            
-            console.log(typeof(state.active.imageUrls));
-            
             state.active.imageUrls = [ ...state.active.imageUrls, ...action.payload ];
-            
-            console.log(typeof(state.active.imageUrls));
-            
             state.isSaving = false;
         },
 
 
+        clearNotesLogout: (state,action) => { 
+            state.isSaving=false;
+            state.messageSaved= '';
+            state.notes=[];
+            state.active=null;
+        },
+
+        
         deleteNoteById: (state,action) => { 
 
         }
@@ -72,5 +73,6 @@ export const {
     updateNote,
     deleteNoteById,
     setPhotosToActiveNote,
+    clearNotesLogout
 
 } = journalSlice.actions;

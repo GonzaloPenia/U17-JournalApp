@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import { DeleteOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material'
 import { Typography, Button, TextField, IconButton } from '@mui/material'
 import Grid from '@mui/material/Grid';
 import Swal from 'sweetalert2';
@@ -44,6 +44,10 @@ export const NoteView = () => {
 
     const onSaveNote = () => { 
         dispatch( startSaveNote() );
+    }
+
+    const onDelete = () => {
+        dispatch(startDeletingNote() );
     }
 
     return (
@@ -98,6 +102,17 @@ export const NoteView = () => {
                     label="Texto"
                     minRows={5}
             />
+        </Grid>
+
+        <Grid container justifyContent='end'>
+            <Button 
+                onClick={onDelete}
+                sx={{mt:2}}
+                color="error"
+            >
+                <DeleteOutline/>
+                Borrar
+            </Button>
         </Grid>
         
         <ImageGallery images={ note.imageUrls } />
