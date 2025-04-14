@@ -9,7 +9,7 @@ import 'sweetalert2/dist/sweetalert2.css';
 
 import { ImageGallery } from '../components'
 import { useForm } from '../../hooks'
-import { setActiveNote, startSaveNote, startUploadingFiles } from '../../store/journal';
+import { setActiveNote, startSaveNote, startUploadingFiles, startDeletingNote } from '../../store/journal';
 
 export const NoteView = () => {
     

@@ -1,3 +1,4 @@
+import { FirebaseDB } from '../../firebase/config';
 import { registerUserWithEmailPassword, loginUserWithEmailPassword, signInWithGoogle, logoutFirebase } from '../../firebase/providers';
 import { clearNotesLogout } from '../journal';
 import { checkingCredentials, logout, login } from "./"
@@ -53,3 +54,4 @@ export const startGoogleSignIn = () => {
     }
     
   }
+
